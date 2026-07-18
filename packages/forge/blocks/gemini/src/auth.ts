@@ -2,7 +2,7 @@ import { createAuth, option } from "@typebot.io/forge";
 
 export const auth = createAuth({
   type: "encryptedCredentials",
-  name: "Google Gemini account",
+  name: "Google account",
   schema: option.object({
     apiKey: option.string.meta({
       layout: {

@@ -2,7 +2,7 @@
 
 export const GeminiLogo = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" {...props}>
-    <title>Google Gemini Logo</title>
+    <title>Google Logo</title>
     <path
       fill="url(#geminiGradient)"
       d="M12 2.5c.4 3.8 2.7 6.1 6.5 6.5-3.8.4-6.1 2.7-6.5 6.5-.4-3.8-2.7-6.1-6.5-6.5 3.8-.4 6.1-2.7 6.5-6.5Z"

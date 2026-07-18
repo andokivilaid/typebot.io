@@ -5,7 +5,7 @@ import { GeminiLogo } from "./logo";
 
 export const geminiBlock = createBlock({
   id: "gemini",
-  name: "Google Gemini",
+  name: "Google",
   tags: ["ai", "chat", "completion", "google", "gemini"],
   LightLogo: GeminiLogo,
   auth,
