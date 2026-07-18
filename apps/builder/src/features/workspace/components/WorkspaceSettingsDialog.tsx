@@ -4,7 +4,7 @@ import { Button } from "@typebot.io/ui/components/Button";
 import { Dialog } from "@typebot.io/ui/components/Dialog";
 import { EmojiOrImageIcon } from "@typebot.io/ui/components/EmojiOrImageIcon";
 import { CreditCardIcon } from "@typebot.io/ui/icons/CreditCardIcon";
-import { HardDriveIcon } from "@typebot.io/ui/icons/HardDriveIcon";
+import { SmileIcon } from "@typebot.io/ui/icons/SmileIcon";
 import { Settings01Icon } from "@typebot.io/ui/icons/Settings01Icon";
 import { UsersIcon } from "@typebot.io/ui/icons/UsersIcon";
 import { Wallet01Icon } from "@typebot.io/ui/icons/Wallet01Icon";
@@ -102,7 +102,7 @@ export const WorkspaceSettingsDialog = ({
                   <EmojiOrImageIcon
                     icon={workspace.icon}
                     className="size-4.5 text-xl"
-                    defaultIcon={<HardDriveIcon className="size-full" />}
+                    defaultIcon={<SmileIcon className="size-full" />}
                   />
                   {t("workspace.settings.modal.menu.settings.label")}
                 </Button>

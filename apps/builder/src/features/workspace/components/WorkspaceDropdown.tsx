@@ -3,7 +3,7 @@ import { useTranslate } from "@tolgee/react";
 import { EmojiOrImageIcon } from "@typebot.io/ui/components/EmojiOrImageIcon";
 import { Menu } from "@typebot.io/ui/components/Menu";
 import { ArrowDown01Icon } from "@typebot.io/ui/icons/ArrowDown01Icon";
-import { HardDriveIcon } from "@typebot.io/ui/icons/HardDriveIcon";
+import { SmileIcon } from "@typebot.io/ui/icons/SmileIcon";
 import { LogoutSquare02Icon } from "@typebot.io/ui/icons/LogoutSquare02Icon";
 import { PlusSignIcon } from "@typebot.io/ui/icons/PlusSignIcon";
 import { TickIcon } from "@typebot.io/ui/icons/TickIcon";
@@ -54,7 +54,7 @@ export const WorkspaceDropdown = ({
               <div className="flex items-center gap-2">
                 <EmojiOrImageIcon
                   icon={workspace.icon}
-                  defaultIcon={<HardDriveIcon className="size-full" />}
+                  defaultIcon={<SmileIcon className="size-full" />}
                   className="size-4.5 text-xl"
                 />
                 <p className="max-w-[250px] truncate">{workspace.name}</p>

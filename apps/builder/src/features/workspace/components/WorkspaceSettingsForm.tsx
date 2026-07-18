@@ -4,7 +4,7 @@ import { Button } from "@typebot.io/ui/components/Button";
 import { DebouncedTextInput } from "@typebot.io/ui/components/DebouncedTextInput";
 import { Field } from "@typebot.io/ui/components/Field";
 import { useOpenControls } from "@typebot.io/ui/hooks/useOpenControls";
-import { HardDriveIcon } from "@typebot.io/ui/icons/HardDriveIcon";
+import { SmileIcon } from "@typebot.io/ui/icons/SmileIcon";
 import { useRef, useState } from "react";
 import { EditableEmojiOrImageIcon } from "@/components/EditableEmojiOrImageIcon";
 import { CopyInput } from "@/components/inputs/CopyInput";
@@ -40,7 +40,7 @@ export const WorkspaceSettingsForm = ({ onClose }: { onClose: () => void }) => {
             icon={workspace.icon}
             onChangeIcon={handleChangeIcon}
             size="lg"
-            defaultIcon={<HardDriveIcon className="size-full" />}
+            defaultIcon={<SmileIcon className="size-full" />}
           />
         )}
       </Field.Root>

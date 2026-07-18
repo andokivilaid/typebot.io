@@ -6,7 +6,7 @@ import { Button } from "@typebot.io/ui/components/Button";
 import { EmojiOrImageIcon } from "@typebot.io/ui/components/EmojiOrImageIcon";
 import { Input } from "@typebot.io/ui/components/Input";
 import { Skeleton } from "@typebot.io/ui/components/Skeleton";
-import { HardDriveIcon } from "@typebot.io/ui/icons/HardDriveIcon";
+import { SmileIcon } from "@typebot.io/ui/icons/SmileIcon";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { BasicSelect } from "@/components/inputs/BasicSelect";
@@ -189,7 +189,7 @@ export const CollaborationList = () => {
             <EmojiOrImageIcon
               icon={workspace.icon}
               className="size-6.25 text-2xl"
-              defaultIcon={<HardDriveIcon className="size-full" />}
+              defaultIcon={<SmileIcon className="size-full" />}
             />
             <p className="text-[15px] truncate">Everyone at {workspace.name}</p>
           </div>

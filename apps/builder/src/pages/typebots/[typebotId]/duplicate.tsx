@@ -3,7 +3,7 @@ import { Button } from "@typebot.io/ui/components/Button";
 import { EmojiOrImageIcon } from "@typebot.io/ui/components/EmojiOrImageIcon";
 import { Label } from "@typebot.io/ui/components/Label";
 import { Radio, RadioGroup } from "@typebot.io/ui/components/RadioGroup";
-import { HardDriveIcon } from "@typebot.io/ui/icons/HardDriveIcon";
+import { SmileIcon } from "@typebot.io/ui/icons/SmileIcon";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { PlanBadge } from "@/features/billing/components/PlanTag";
@@ -52,7 +52,7 @@ const Page = () => {
               <EmojiOrImageIcon
                 icon={workspace.icon}
                 className="size-4.5 text-xl"
-                defaultIcon={<HardDriveIcon className="size-full" />}
+                defaultIcon={<SmileIcon className="size-full" />}
               />
               {workspace.name}
               <PlanBadge plan={workspace.plan} />

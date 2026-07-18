@@ -3,7 +3,7 @@ import { isNotDefined } from "@typebot.io/lib/utils";
 import { Button } from "@typebot.io/ui/components/Button";
 import { EmojiOrImageIcon } from "@typebot.io/ui/components/EmojiOrImageIcon";
 import { useOpenControls } from "@typebot.io/ui/hooks/useOpenControls";
-import { HardDriveIcon } from "@typebot.io/ui/icons/HardDriveIcon";
+import { SmileIcon } from "@typebot.io/ui/icons/SmileIcon";
 import { Settings01Icon } from "@typebot.io/ui/icons/Settings01Icon";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -41,7 +41,7 @@ export const DashboardHeader = () => {
           <EmojiOrImageIcon
             icon={workspace?.icon}
             className="size-6.25 text-2xl"
-            defaultIcon={<HardDriveIcon className="size-full" />}
+            defaultIcon={<SmileIcon className="size-full" />}
           />
         </Link>
         <div className="flex items-center gap-2">
