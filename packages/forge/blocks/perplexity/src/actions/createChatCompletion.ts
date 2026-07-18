@@ -55,6 +55,13 @@ export const createChatCompletion = createAction({
         model: undefined,
       }),
     },
+    {
+      blockId: "gemini",
+      transform: (options) => ({
+        ...options,
+        model: undefined,
+      }),
+    },
   ],
   getSetVariableIds: (options) =>
     options.responseMapping?.map((res) => res.variableId).filter(isDefined) ??

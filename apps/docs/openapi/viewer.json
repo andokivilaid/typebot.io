@@ -8626,6 +8626,30 @@
                                                   "id",
                                                   "type"
                                                 ]
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties": {
+                                                  "id": {
+                                                    "type": "string"
+                                                  },
+                                                  "outgoingEdgeId": {
+                                                    "type": "string"
+                                                  },
+                                                  "type": {
+                                                    "const": "gemini"
+                                                  },
+                                                  "options": {
+                                                    "anyOf": [
+                                                      {},
+                                                      {}
+                                                    ]
+                                                  }
+                                                },
+                                                "required": [
+                                                  "id",
+                                                  "type"
+                                                ]
                                               }
                                             ]
                                           }

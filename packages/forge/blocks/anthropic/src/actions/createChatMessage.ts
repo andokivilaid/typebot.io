@@ -137,6 +137,10 @@ export const createChatMessage = createAction({
     },
     { blockId: "open-router", transform: transformToChatCompletionOptions },
     { blockId: "together-ai", transform: transformToChatCompletionOptions },
+    {
+      blockId: "gemini",
+      transform: (opts) => transformToChatCompletionOptions(opts, true),
+    },
   ],
   getSetVariableIds: ({ responseMapping }) =>
     responseMapping?.map((res) => res.variableId).filter(isDefined) ?? [],

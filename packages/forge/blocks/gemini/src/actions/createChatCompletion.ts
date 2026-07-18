@@ -3,17 +3,19 @@ import { getChatCompletionStreamVarId } from "@typebot.io/ai/getChatCompletionSt
 import { parseChatCompletionOptions } from "@typebot.io/ai/parseChatCompletionOptions";
 import { createAction } from "@typebot.io/forge";
 import { auth } from "../auth";
+import { geminiModels } from "../constants";
 
 export const createChatCompletion = createAction({
   name: "Create chat completion",
   auth,
   options: parseChatCompletionOptions({
     models: {
-      type: "text",
-      helperText:
-        "You can find the list of all the models available [here](https://docs.together.ai/docs/inference-models#chat-models). Copy the model string for API.",
+      type: "static",
+      models: geminiModels,
     },
   }),
+  getSetVariableIds: getChatCompletionSetVarIds,
+  getStreamVariableId: getChatCompletionStreamVarId,
   turnableInto: [
     {
       blockId: "openai",
@@ -21,25 +23,31 @@ export const createChatCompletion = createAction({
     {
       blockId: "open-router",
     },
-    { blockId: "mistral" },
-    { blockId: "perplexity" },
     {
       blockId: "anthropic",
       transform: (options) => ({
         ...options,
+        model: undefined,
         action: "Create Chat Message",
       }),
     },
-    { blockId: "groq" },
-    { blockId: "deepseek" },
     {
-      blockId: "gemini",
-      transform: (options) => ({
-        ...options,
-        model: undefined,
-      }),
+      blockId: "mistral",
+      transform: (options) => ({ ...options, model: undefined }),
+    },
+    {
+      blockId: "groq",
+    },
+    {
+      blockId: "deepseek",
+      transform: (options) => ({ ...options, model: undefined }),
+    },
+    {
+      blockId: "perplexity",
+      transform: (options) => ({ ...options, model: undefined }),
+    },
+    {
+      blockId: "together-ai",
     },
   ],
-  getSetVariableIds: getChatCompletionSetVarIds,
-  getStreamVariableId: getChatCompletionStreamVarId,
 });

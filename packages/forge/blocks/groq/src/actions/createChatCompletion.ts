@@ -42,6 +42,13 @@ export const createChatCompletion = createAction({
     {
       blockId: "deepseek",
     },
+    {
+      blockId: "gemini",
+      transform: (options) => ({
+        ...options,
+        model: undefined,
+      }),
+    },
   ],
   getSetVariableIds: getChatCompletionSetVarIds,
   getStreamVariableId: getChatCompletionStreamVarId,

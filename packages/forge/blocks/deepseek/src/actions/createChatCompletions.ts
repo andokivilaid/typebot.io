@@ -55,6 +55,13 @@ export const createChatCompletion = createAction({
         model: undefined,
       }),
     },
+    {
+      blockId: "gemini",
+      transform: (opts) => ({
+        ...opts,
+        model: undefined,
+      }),
+    },
   ],
   getStreamVariableId: getChatCompletionStreamVarId,
 });

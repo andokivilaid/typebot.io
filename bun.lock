@@ -607,7 +607,7 @@
     },
     "packages/embeds/js": {
       "name": "@typebot.io/js",
-      "version": "0.10.5",
+      "version": "0.10.7",
       "devDependencies": {
         "@ai-sdk/ui-utils": "^1.2.11",
         "@ark-ui/solid": "^5.19.0",
@@ -642,7 +642,7 @@
     },
     "packages/embeds/react": {
       "name": "@typebot.io/react",
-      "version": "0.10.5",
+      "version": "0.10.7",
       "dependencies": {
         "@typebot.io/js": "workspace:*",
         "react": "^19.2.4",
@@ -773,6 +773,18 @@
         "@typebot.io/forge": "workspace:*",
         "@typebot.io/lib": "workspace:*",
         "ky": "^1.2.4",
+      },
+      "devDependencies": {
+        "@types/react": "^19.2.14",
+      },
+    },
+    "packages/forge/blocks/gemini": {
+      "name": "@typebot.io/gemini-block",
+      "version": "1.0.0",
+      "dependencies": {
+        "@ai-sdk/google": "^2.0.82",
+        "@typebot.io/ai": "workspace:*",
+        "@typebot.io/forge": "workspace:*",
       },
       "devDependencies": {
         "@types/react": "^19.2.14",
@@ -964,6 +976,7 @@
         "@typebot.io/deepseek-block": "workspace:*",
         "@typebot.io/dify-ai-block": "workspace:*",
         "@typebot.io/elevenlabs-block": "workspace:*",
+        "@typebot.io/gemini-block": "workspace:*",
         "@typebot.io/gmail-block": "workspace:*",
         "@typebot.io/groq-block": "workspace:*",
         "@typebot.io/mistral-block": "workspace:*",
@@ -1391,6 +1404,8 @@
     "@ai-sdk/deepseek": ["@ai-sdk/deepseek@1.0.40", "", { "dependencies": { "@ai-sdk/provider": "2.0.3", "@ai-sdk/provider-utils": "3.0.25" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-T5zW4s4/aKZLTjUulB9hUOFB6kxNCiVGPUP3xuZyVAlOWBye51KELmI3pCHSfMCrJcuA5Xhlg7ykO2JRW9Qq3Q=="],
 
     "@ai-sdk/gateway": ["@ai-sdk/gateway@2.0.89", "", { "dependencies": { "@ai-sdk/provider": "2.0.3", "@ai-sdk/provider-utils": "3.0.25", "@vercel/oidc": "3.1.0" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-oIIsLOTgfuFIg6HGQ3d5gXjUvgx2YKav10T4t+sexnQj1anw6WoMDdSAT24igbfgWrC+Cf2tmlLeRhBUxdsZ9g=="],
+
+    "@ai-sdk/google": ["@ai-sdk/google@2.0.82", "", { "dependencies": { "@ai-sdk/provider": "2.0.3", "@ai-sdk/provider-utils": "3.0.30" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-5Sl8QOvx7ificYVyM6X9Qh4yGhNk7nOMfBdBKtYYeC0YHUOnR+mJVodh+AOtBMZ5eR0X9iPitW7UXC1PPiprrw=="],
 
     "@ai-sdk/groq": ["@ai-sdk/groq@2.0.40", "", { "dependencies": { "@ai-sdk/provider": "2.0.3", "@ai-sdk/provider-utils": "3.0.25" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-1EL8D1tyjOKjCFUt8XspDoA6zxDcalMsLR2O56ji8QklWsAPaf4TuMJAvf5x5KDrkuJaSAjk94KvPH5hOX+VNQ=="],
 
@@ -3203,6 +3218,8 @@
     "@typebot.io/forge": ["@typebot.io/forge@workspace:packages/forge/core"],
 
     "@typebot.io/forge-repository": ["@typebot.io/forge-repository@workspace:packages/forge/repository"],
+
+    "@typebot.io/gemini-block": ["@typebot.io/gemini-block@workspace:packages/forge/blocks/gemini"],
 
     "@typebot.io/gmail-block": ["@typebot.io/gmail-block@workspace:packages/forge/blocks/gmail"],
 
@@ -6875,6 +6892,8 @@
     "zustand-x": ["zustand-x@6.1.0", "", { "dependencies": { "immer": "^10.0.3", "lodash.mapvalues": "^4.6.0", "mutative": "1.1.0", "react-tracked": "^1.7.11", "use-sync-external-store": "1.4.0" }, "peerDependencies": { "zustand": ">=5.0.2" } }, "sha512-lW1Fs29bLCrerWDa3lZLPuEn+ZkbSGzXdwdImKLJUtI2OqlDjpcFac5WTzCPs2ul/igwXFnGiKH1mdn+1Pl2mw=="],
 
     "zwitch": ["zwitch@2.0.4", "", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
+
+    "@ai-sdk/google/@ai-sdk/provider-utils": ["@ai-sdk/provider-utils@3.0.30", "", { "dependencies": { "@ai-sdk/provider": "2.0.3", "@standard-schema/spec": "^1.0.0", "eventsource-parser": "^3.0.6" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-NCJ9JKow5ENAgEZxzvEvF20thwDiH+hutvzmrUDbloRX0azpJHNst8+7pZIVryYhLM9wgpT5/ShTSjPTFhkxEQ=="],
 
     "@ai-sdk/ui-utils/@ai-sdk/provider": ["@ai-sdk/provider@1.1.3", "", { "dependencies": { "json-schema": "^0.4.0" } }, "sha512-qZMxYJ0qqX/RfnuIaab+zp8UAeJn/ygXXAffR5I4N0n1IrvA6qBsjc8hXLmBiMV2zoXlifkacF7sEFnYnjBcqg=="],
 
