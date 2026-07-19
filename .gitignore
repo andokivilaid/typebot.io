@@ -1,6 +1,8 @@
 node_modules
 .next
 .env.local
+.env.development
+.env.*
 workspace.code-workspace
 .DS_Store
 .idea
