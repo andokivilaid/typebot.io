@@ -20,6 +20,14 @@ Example patterns:
 - Quiz: question text → choice input → feedback text per answer
 `.trim();
 
+const jsonShapeExample = `
+Required JSON shapes (use these exactly):
+- Text block: { "type": "text", "content": { "richText": [{ "type": "p", "children": [{ "text": "Hello!" }] }] } }
+- Choice block: { "type": "choice input", "items": [{ "content": "Option A" }, { "content": "Option B" }] }
+- Edge from start: { "from": { "kind": "start" }, "to": { "groupTitle": "Welcome" } }
+- Edge from choice: { "from": { "kind": "block", "groupTitle": "Menu", "blockIndex": 1, "itemIndex": 0 }, "to": { "groupTitle": "Answer A" } }
+`.trim();
+
 export const buildGenerationSystemPrompt = () =>
   [
     "You are an expert Typebot builder assistant.",
@@ -27,6 +35,7 @@ export const buildGenerationSystemPrompt = () =>
     "Use version 6.1 compatible block types only.",
     blockCatalog,
     fewShotHint,
+    jsonShapeExample,
     "Rules:",
     "- Every group needs a unique title and graphCoordinates (spread groups horizontally, ~350px apart).",
     "- Connect flow with edges using groupTitle references.",

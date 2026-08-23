@@ -3,8 +3,9 @@ import { env } from "@typebot.io/env";
 import { generateObject } from "ai";
 import { buildGenerationSystemPrompt } from "./buildSystemPrompt";
 import { createGeminiModel } from "./createGeminiModel";
-import { generatedTypebotSchema } from "./generatedTypebotSchema";
 import { materializeGeneratedTypebot } from "./materializeGeneratedTypebot";
+import { normalizeGeneratedTypebot } from "./normalizeGeneratedTypebot";
+import { rawGeneratedTypebotSchema } from "./rawGeneratedTypebotSchema";
 
 type GenerateTypebotFromPromptParams = {
   prompt: string;
@@ -25,12 +26,14 @@ export const generateTypebotFromPrompt = async ({
     .filter(Boolean)
     .join("\n");
 
-  const { object: generatedTypebot } = await generateObject({
+  const { object: rawTypebot } = await generateObject({
     model: createGeminiModel(env.COPILOT_GENERATION_MODEL),
-    schema: zodToSchema(generatedTypebotSchema),
+    schema: zodToSchema(rawGeneratedTypebotSchema),
     system: buildGenerationSystemPrompt(),
     prompt: userPrompt,
   });
+
+  const generatedTypebot = normalizeGeneratedTypebot(rawTypebot);
 
   return materializeGeneratedTypebot(generatedTypebot);
 };
