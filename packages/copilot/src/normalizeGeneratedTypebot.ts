@@ -55,36 +55,76 @@ const normalizeBlock = (block: RawGeneratedBlock): GeneratedBlock => {
     case "choice input":
       return {
         type: "choice input",
-        items: block.items.map(normalizeChoiceItem),
+        items: normalizeChoiceItems(block.items),
       };
     case "image":
-      return block;
+      return {
+        type: "image",
+        content: normalizeImageContent(block.content),
+      };
     case "Wait":
-      return block;
+      return {
+        type: "Wait",
+        options: normalizeWaitOptions(block.options),
+      };
     case "text input":
-      return block;
     case "email input":
-      return block;
     case "phone number input":
-      return block;
     case "number input":
-      return block;
     case "url input":
-      return block;
+      return {
+        type: block.type,
+        options: normalizeInputOptions(block.options),
+      };
   }
 };
 
-const normalizeTextContent = (
-  content: string | { richText: unknown[] },
-) => {
+const normalizeTextContent = (content: unknown) => {
   if (typeof content === "string") {
     return {
       richText: [{ type: "p" as const, children: [{ text: content }] }],
     };
   }
 
+  if (Array.isArray(content)) {
+    if (content.every((item) => typeof item === "string")) {
+      return {
+        richText: content.map((paragraph) => ({
+          type: "p" as const,
+          children: [{ text: paragraph }],
+        })),
+      };
+    }
+
+    return {
+      richText: content.map(normalizeRichTextParagraph),
+    };
+  }
+
+  if (isRecord(content)) {
+    if (Array.isArray(content.richText)) {
+      return {
+        richText: content.richText.map(normalizeRichTextParagraph),
+      };
+    }
+
+    if (typeof content.text === "string") {
+      return {
+        richText: [{ type: "p" as const, children: [{ text: content.text }] }],
+      };
+    }
+  }
+
+  if (content === undefined || content === null) {
+    return {
+      richText: [{ type: "p" as const, children: [{ text: "" }] }],
+    };
+  }
+
   return {
-    richText: content.richText.map(normalizeRichTextParagraph),
+    richText: [
+      { type: "p" as const, children: [{ text: String(content) }] },
+    ],
   };
 };
 
@@ -123,8 +163,105 @@ const normalizeRichTextNode = (node: unknown) => {
   return { text: node.text };
 };
 
-const normalizeChoiceItem = (item: string | { content: string }) =>
-  typeof item === "string" ? { content: item } : { content: item.content };
+const normalizeChoiceItems = (items: unknown) => {
+  if (!Array.isArray(items) || items.length === 0) {
+    return [{ content: "Option 1" }];
+  }
+
+  return items.map(normalizeChoiceItem);
+};
+
+const normalizeChoiceItem = (item: unknown) => {
+  if (typeof item === "string") {
+    return { content: item };
+  }
+
+  if (isRecord(item)) {
+    if (typeof item.content === "string") {
+      return { content: item.content };
+    }
+
+    if (typeof item.text === "string") {
+      return { content: item.text };
+    }
+
+    if (typeof item.label === "string") {
+      return { content: item.label };
+    }
+  }
+
+  return { content: String(item) };
+};
+
+const normalizeInputOptions = (options: unknown) => {
+  const coercedOptions = coerceToObject(options);
+  if (!coercedOptions) return undefined;
+
+  const labelsRecord = coerceToObject(coercedOptions.labels);
+  const labels =
+    labelsRecord === undefined
+      ? undefined
+      : {
+          ...(typeof labelsRecord.placeholder === "string"
+            ? { placeholder: labelsRecord.placeholder }
+            : {}),
+          ...(typeof labelsRecord.button === "string"
+            ? { button: labelsRecord.button }
+            : {}),
+        };
+
+  const normalizedOptions = {
+    ...(labels !== undefined && Object.keys(labels).length > 0
+      ? { labels }
+      : {}),
+    ...(typeof coercedOptions.variableId === "string"
+      ? { variableId: coercedOptions.variableId }
+      : {}),
+  };
+
+  return Object.keys(normalizedOptions).length > 0
+    ? normalizedOptions
+    : undefined;
+};
+
+const normalizeWaitOptions = (options: unknown) => {
+  const coercedOptions = coerceToObject(options);
+  if (!coercedOptions) return undefined;
+
+  const secondsToWaitFor = coercedOptions.secondsToWaitFor;
+  if (secondsToWaitFor === undefined || secondsToWaitFor === null) {
+    return undefined;
+  }
+
+  return {
+    secondsToWaitFor: String(secondsToWaitFor),
+  };
+};
+
+const normalizeImageContent = (content: unknown) => {
+  const coercedContent = coerceToObject(content);
+  if (coercedContent && typeof coercedContent.url === "string") {
+    return { url: coercedContent.url };
+  }
+
+  if (typeof content === "string") {
+    return { url: content };
+  }
+
+  if (Array.isArray(content)) {
+    const firstString = content.find((item) => typeof item === "string");
+    if (typeof firstString === "string") {
+      return { url: firstString };
+    }
+
+    const firstObject = content.find(isRecord);
+    if (firstObject && typeof firstObject.url === "string") {
+      return { url: firstObject.url };
+    }
+  }
+
+  return { url: "" };
+};
 
 const normalizeEdge = (
   edge: RawGeneratedEdge,
@@ -193,11 +330,9 @@ const resolveChoiceIndices = (
     const block = group.blocks[blockIndex];
     if (block?.type !== "choice input") continue;
 
-    for (let itemIndex = 0; itemIndex < block.items.length; itemIndex += 1) {
-      const item = block.items[itemIndex];
-      const itemContent =
-        typeof item === "string" ? item : item?.content ?? "";
-      if (itemContent === choice) {
+    const items = normalizeChoiceItems(block.items);
+    for (let itemIndex = 0; itemIndex < items.length; itemIndex += 1) {
+      if (items[itemIndex]?.content === choice) {
         return { blockIndex, itemIndex };
       }
     }
@@ -224,6 +359,15 @@ const findDefaultBlockIndex = (
   if (inputBlockIndex >= 0) return inputBlockIndex;
 
   return group.blocks.length - 1;
+};
+
+const coerceToObject = (value: unknown) => {
+  if (value === undefined || value === null) return undefined;
+  if (Array.isArray(value)) {
+    return value.find(isRecord);
+  }
+  if (isRecord(value)) return value;
+  return undefined;
 };
 
 const isInputBlock = (block: GeneratedBlock) =>

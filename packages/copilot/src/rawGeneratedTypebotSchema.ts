@@ -5,87 +5,22 @@ const coordinatesSchema = z.object({
   y: z.number(),
 });
 
-const rawTextBlockSchema = z.object({
-  type: z.literal("text"),
-  content: z.union([
-    z.string(),
-    z.object({
-      richText: z.array(z.unknown()).min(1),
-    }),
+export const rawGeneratedBlockSchema = z.object({
+  type: z.enum([
+    "text",
+    "choice input",
+    "email input",
+    "text input",
+    "phone number input",
+    "number input",
+    "url input",
+    "image",
+    "Wait",
   ]),
+  content: z.unknown().optional(),
+  items: z.unknown().optional(),
+  options: z.unknown().optional(),
 });
-
-const rawChoiceBlockSchema = z.object({
-  type: z.literal("choice input"),
-  items: z
-    .array(z.union([z.string(), z.object({ content: z.string() })]))
-    .min(1),
-});
-
-const rawInputOptionsSchema = z
-  .object({
-    labels: z
-      .object({
-        placeholder: z.string().optional(),
-        button: z.string().optional(),
-      })
-      .optional(),
-    variableId: z.string().optional(),
-  })
-  .optional();
-
-const rawEmailBlockSchema = z.object({
-  type: z.literal("email input"),
-  options: rawInputOptionsSchema,
-});
-
-const rawTextInputBlockSchema = z.object({
-  type: z.literal("text input"),
-  options: rawInputOptionsSchema,
-});
-
-const rawPhoneBlockSchema = z.object({
-  type: z.literal("phone number input"),
-  options: rawInputOptionsSchema,
-});
-
-const rawNumberBlockSchema = z.object({
-  type: z.literal("number input"),
-  options: rawInputOptionsSchema,
-});
-
-const rawUrlBlockSchema = z.object({
-  type: z.literal("url input"),
-  options: rawInputOptionsSchema,
-});
-
-const rawImageBlockSchema = z.object({
-  type: z.literal("image"),
-  content: z.object({
-    url: z.string(),
-  }),
-});
-
-const rawWaitBlockSchema = z.object({
-  type: z.literal("Wait"),
-  options: z
-    .object({
-      secondsToWaitFor: z.string().optional(),
-    })
-    .optional(),
-});
-
-export const rawGeneratedBlockSchema = z.discriminatedUnion("type", [
-  rawTextBlockSchema,
-  rawChoiceBlockSchema,
-  rawEmailBlockSchema,
-  rawTextInputBlockSchema,
-  rawPhoneBlockSchema,
-  rawNumberBlockSchema,
-  rawUrlBlockSchema,
-  rawImageBlockSchema,
-  rawWaitBlockSchema,
-]);
 
 export type RawGeneratedBlock = z.infer<typeof rawGeneratedBlockSchema>;
 
