@@ -59,6 +59,7 @@
         "@typebot.io/chat-session": "workspace:*",
         "@typebot.io/conditions": "workspace:*",
         "@typebot.io/config": "workspace:*",
+        "@typebot.io/copilot": "workspace:*",
         "@typebot.io/credentials": "workspace:*",
         "@typebot.io/emails": "workspace:*",
         "@typebot.io/env": "workspace:*",
@@ -561,6 +562,35 @@
       },
       "devDependencies": {
         "@testcontainers/postgresql": "^11.13.0",
+      },
+    },
+    "packages/copilot": {
+      "name": "@typebot.io/copilot",
+      "version": "0.0.1",
+      "dependencies": {
+        "@ai-sdk/google": "^2.0.82",
+        "@paralleldrive/cuid2": "^2.2.1",
+        "@typebot.io/ai": "workspace:*",
+        "@typebot.io/auth": "workspace:*",
+        "@typebot.io/blocks-bubbles": "workspace:*",
+        "@typebot.io/blocks-core": "workspace:*",
+        "@typebot.io/blocks-inputs": "workspace:*",
+        "@typebot.io/blocks-logic": "workspace:*",
+        "@typebot.io/env": "workspace:*",
+        "@typebot.io/events": "workspace:*",
+        "@typebot.io/feature-flags": "workspace:*",
+        "@typebot.io/groups": "workspace:*",
+        "@typebot.io/lib": "workspace:*",
+        "@typebot.io/schemas": "workspace:*",
+        "@typebot.io/settings": "workspace:*",
+        "@typebot.io/shared-core": "workspace:*",
+        "@typebot.io/typebot": "workspace:*",
+        "@typebot.io/variables": "workspace:*",
+        "@upstash/ratelimit": "^0.4.3",
+        "ai": "^5.0.52",
+        "effect": "4.0.0-beta.38",
+        "ioredis": "^5.4.1",
+        "zod": "^4.3.5",
       },
     },
     "packages/credentials": {
@@ -3196,6 +3226,8 @@
     "@typebot.io/conditions": ["@typebot.io/conditions@workspace:packages/conditions"],
 
     "@typebot.io/config": ["@typebot.io/config@workspace:packages/config"],
+
+    "@typebot.io/copilot": ["@typebot.io/copilot@workspace:packages/copilot"],
 
     "@typebot.io/credentials": ["@typebot.io/credentials@workspace:packages/credentials"],
 

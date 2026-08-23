@@ -15,6 +15,7 @@ import { openAIRouter } from "@/features/blocks/integrations/openai/api/router";
 import { emailRouter } from "@/features/blocks/integrations/sendEmail/api/router";
 import { getLinkedTypebots } from "@/features/blocks/logic/typebotLink/api/getLinkedTypebots";
 import { collaboratorsRouter } from "@/features/collaboration/api/router";
+import { copilotRouter } from "@/features/copilot/api/router";
 import { credentialsRouter } from "@/features/credentials/api/router";
 import { customDomainsRouter } from "@/features/customDomains/api/router";
 import { generateGroupTitle } from "@/features/editor/api/generateGroupTitle";
@@ -80,6 +81,7 @@ export const appRouter: AppRouter = {
   email: emailRouter,
   telemetry: telemetryRouter,
   generateGroupTitle,
+  copilot: copilotRouter,
   chat: builderChatRouter,
   credentials: credentialsRouter,
   featureFlags: featureFlagsRouter,
@@ -112,6 +114,7 @@ export type AppRouter = {
   email: typeof emailRouter;
   telemetry: typeof telemetryRouter;
   generateGroupTitle: typeof generateGroupTitle;
+  copilot: typeof copilotRouter;
   chat: typeof builderChatRouter;
   credentials: typeof credentialsRouter;
   featureFlags: typeof featureFlagsRouter;

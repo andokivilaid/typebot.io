@@ -489,6 +489,18 @@ const otelEnv = {
   },
 };
 
+const copilotEnv = {
+  server: {
+    GEMINI_API_KEY: z.string().min(1).optional(),
+    COPILOT_ENABLED: boolean.optional().default(false),
+    COPILOT_DEFAULT_MODEL: z.string().optional().default("gemini-3.5-flash"),
+    COPILOT_GENERATION_MODEL: z
+      .string()
+      .optional()
+      .default("gemini-3.1-pro-preview"),
+  },
+};
+
 const formatEnvIssues = (issues: readonly StandardSchemaV1.Issue[]) =>
   issues.reduce<Record<string, string[]>>((acc, issue) => {
     const path = issue.path?.map((segment) =>
@@ -529,6 +541,7 @@ export const env = createEnv({
     ...posthogEnv.server,
     ...inngestEnv.server,
     ...otelEnv.server,
+    ...copilotEnv.server,
   },
   client: {
     ...baseEnv.client,

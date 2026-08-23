@@ -233,6 +233,9 @@
     },
     {
       "path": "./packages/forge/blocks/gemini"
+    },
+    {
+      "path": "./packages/copilot"
     }
   ]
 }

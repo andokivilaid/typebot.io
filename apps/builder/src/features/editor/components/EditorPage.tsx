@@ -1,6 +1,7 @@
 import { LoaderCircleIcon } from "@typebot.io/ui/icons/LoaderCircleIcon";
 import { useRef } from "react";
 import { Seo } from "@/components/Seo";
+import { CopilotDrawer } from "@/features/copilot/components/CopilotDrawer";
 import { Graph } from "@/features/graph/components/Graph";
 import { GraphDndProvider } from "@/features/graph/providers/GraphDndProvider";
 import { GraphProvider } from "@/features/graph/providers/GraphProvider";
@@ -82,6 +83,8 @@ const RightPanel = () => {
       return <PreviewDrawer />;
     case "variables":
       return <VariablesDrawer onClose={() => setRightPanel(null)} />;
+    case "copilot":
+      return <CopilotDrawer onClose={() => setRightPanel(null)} />;
     case null:
       return null;
   }

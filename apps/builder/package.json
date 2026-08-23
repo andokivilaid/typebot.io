@@ -97,6 +97,7 @@
     "@typebot.io/chat-session": "workspace:*",
     "@typebot.io/conditions": "workspace:*",
     "@typebot.io/config": "workspace:*",
+    "@typebot.io/copilot": "workspace:*",
     "@typebot.io/credentials": "workspace:*",
     "@typebot.io/emails": "workspace:*",
     "@typebot.io/env": "workspace:*",

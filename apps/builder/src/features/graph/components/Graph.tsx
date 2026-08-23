@@ -19,6 +19,8 @@ import type {
   EdgeWithTotalVisits,
   TotalAnswers,
 } from "@/features/analytics/schemas";
+import { CopilotEmptyState } from "@/features/copilot/components/CopilotEmptyState";
+import { isTypebotMostlyEmpty } from "@/features/copilot/helpers/isTypebotMostlyEmpty";
 import { BoardMenuButton } from "@/features/editor/components/BoardMenuButton";
 import { headerHeight } from "@/features/editor/constants";
 import { useTypebot } from "@/features/editor/providers/TypebotProvider";
@@ -409,6 +411,9 @@ export const Graph = ({
           edgesWithTotalUsers={edgesWithTotalUsers}
           onUnlockProPlanClick={onUnlockProPlanClick}
         />
+        {!isReadOnly &&
+          "workspaceId" in typebot &&
+          isTypebotMostlyEmpty(typebot) && <CopilotEmptyState />}
       </div>
       {!isReadOnly && selectBoxCoordinates && (
         <SelectBox {...selectBoxCoordinates} />

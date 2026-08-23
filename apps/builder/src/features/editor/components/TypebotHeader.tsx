@@ -11,6 +11,7 @@ import { LayoutBottomIcon } from "@typebot.io/ui/icons/LayoutBottomIcon";
 import { LoaderCircleIcon } from "@typebot.io/ui/icons/LoaderCircleIcon";
 import { PlayIcon } from "@typebot.io/ui/icons/PlayIcon";
 import { Redo03Icon } from "@typebot.io/ui/icons/Redo03Icon";
+import { SparklesIcon } from "@typebot.io/ui/icons/SparklesIcon";
 import { Undo03Icon } from "@typebot.io/ui/icons/Undo03Icon";
 import { cn } from "@typebot.io/ui/lib/cn";
 import { useRouter } from "next/router";
@@ -284,6 +285,19 @@ const RightElements = ({
           <span className="hidden xl:inline">
             {t("editor.header.previewButton.label")}
           </span>
+        </Button>
+      )}
+      {router.pathname.includes("/edit") && currentUserMode === "write" && (
+        <Button
+          variant={rightPanel === "copilot" ? "outline" : "secondary"}
+          size="sm"
+          onClick={() =>
+            setRightPanel(rightPanel === "copilot" ? null : "copilot")
+          }
+          disabled={isNotDefined(typebot) || isSavingLoading}
+        >
+          <SparklesIcon />
+          <span className="hidden xl:inline">Co-pilot</span>
         </Button>
       )}
       {currentUserMode === "guest" && (

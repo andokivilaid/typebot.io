@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslate } from "@tolgee/react";
 import type { Typebot } from "@typebot.io/typebot/schemas/typebot";
 import { Button } from "@typebot.io/ui/components/Button";
@@ -6,10 +6,13 @@ import { useOpenControls } from "@typebot.io/ui/hooks/useOpenControls";
 import { Download01Icon } from "@typebot.io/ui/icons/Download01Icon";
 import { GridViewIcon } from "@typebot.io/ui/icons/GridViewIcon";
 import { LayoutBottomIcon } from "@typebot.io/ui/icons/LayoutBottomIcon";
+import { SparklesIcon } from "@typebot.io/ui/icons/SparklesIcon";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { GenerateWithAIModal } from "@/features/copilot/components/GenerateWithAIModal";
 import { useUser } from "@/features/user/hooks/useUser";
 import { useWorkspace } from "@/features/workspace/WorkspaceProvider";
+import { useRightPanel } from "@/hooks/useRightPanel";
 import { orpc } from "@/lib/queryClient";
 import { ImportTypebotFromFileButton } from "./ImportTypebotFromFileButton";
 import { TemplatesDialog } from "./TemplatesDialog";
@@ -20,8 +23,14 @@ export const CreateNewTypebotButtons = () => {
   const { user } = useUser();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useOpenControls();
+  const generateModalControls = useOpenControls();
+  const [, setRightPanel] = useRightPanel();
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const { data: copilotStatus } = useQuery(
+    orpc.copilot.getStatus.queryOptions({}),
+  );
 
   const { mutate: createTypebot } = useMutation(
     orpc.typebot.createTypebot.mutationOptions({
@@ -47,7 +56,11 @@ export const CreateNewTypebotButtons = () => {
       onSuccess: (data) => {
         router.push({
           pathname: `/typebots/${data.typebot.id}/edit`,
+          query: {
+            rightPanel: "copilot",
+          },
         });
+        setRightPanel("copilot");
       },
       onSettled: () => {
         setIsLoading(false);
@@ -81,6 +94,16 @@ export const CreateNewTypebotButtons = () => {
       });
   };
 
+  const handleGeneratedTypebot = (typebotId: string) => {
+    router.push({
+      pathname: `/typebots/${typebotId}/edit`,
+      query: {
+        rightPanel: "copilot",
+      },
+    });
+    setRightPanel("copilot");
+  };
+
   return (
     <div className="flex flex-col items-center w-full pt-20 gap-10">
       <div className="flex flex-col w-full max-w-[650px] p-10 gap-10 rounded-lg border bg-gray-1">
@@ -96,6 +119,18 @@ export const CreateNewTypebotButtons = () => {
             <LayoutBottomIcon />
             {t("templates.buttons.fromScratchButton.label")}
           </Button>
+          {copilotStatus?.enabled ? (
+            <Button
+              variant="outline-secondary"
+              className="w-full py-8 text-lg [&_svg]:size-5 [&_svg]:text-blue-10"
+              onClick={generateModalControls.onOpen}
+              disabled={isLoading || copilotStatus.remainingRequests <= 0}
+              size="lg"
+            >
+              <SparklesIcon />
+              Generate with AI
+            </Button>
+          ) : null}
           <Button
             variant="outline-secondary"
             className="w-full py-8 text-lg [&_svg]:size-5 [&_svg]:text-orange-10"
@@ -123,6 +158,11 @@ export const CreateNewTypebotButtons = () => {
         onClose={onClose}
         onTypebotChoose={handleCreateSubmit}
         isLoading={isLoading}
+      />
+      <GenerateWithAIModal
+        isOpen={generateModalControls.isOpen}
+        onClose={generateModalControls.onClose}
+        onGenerated={handleGeneratedTypebot}
       />
     </div>
   );
